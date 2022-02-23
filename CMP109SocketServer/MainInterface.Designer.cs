@@ -43,7 +43,7 @@ namespace CMP109SocketServer
             this.lstStatus.HorizontalScrollbar = true;
             this.lstStatus.ItemHeight = 15;
             this.lstStatus.Items.AddRange(new object[] {
-            "CMP109 Python Assessment Test Server",
+            "Assessment Test Server Status Messages:",
             "---"});
             this.lstStatus.Location = new System.Drawing.Point(10, 27);
             this.lstStatus.Name = "lstStatus";
@@ -103,7 +103,7 @@ namespace CMP109SocketServer
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainInterface";
-            this.Text = "Python Assessment Test Server";
+            this.Text = "CMP109 Assessment Test Server";
             this.ResumeLayout(false);
             this.PerformLayout();
 
