@@ -181,22 +181,29 @@ namespace CMP109SocketServer
 
                     int i;
 
-                    // Loop to receive all the data sent by the client.
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    try
                     {
-                        string tcpReceived = Encoding.ASCII.GetString(bytes, 0, i);
-                        
-                        // Translate data bytes to a ASCII string.
-                        AddStatus($"[TCP] Packet received from {client.Client.RemoteEndPoint.ToString()} : {tcpReceived}");
+                        // Loop to receive all the data sent by the client.
+                        while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                        {
+                            string tcpReceived = Encoding.ASCII.GetString(bytes, 0, i);
 
-                        // Process the data sent by the client.
-                        int wordCount = tcpReceived.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
-                        AddStatus($"[TCP] Counting words...: {wordCount}");
-                        byte[] tcpResponse = Encoding.ASCII.GetBytes(wordCount.ToString());
+                            // Translate data bytes to a ASCII string.
+                            AddStatus($"[TCP] Packet received from {client.Client.RemoteEndPoint.ToString()} : {tcpReceived}");
 
-                        // Send back a response.
-                        stream.Write(tcpResponse, 0, tcpResponse.Length);
-                        AddStatus($"[TCP] Packet data sent to {client.Client.RemoteEndPoint.ToString()} : {Encoding.ASCII.GetString(tcpResponse, 0, tcpResponse.Length)}");
+                            // Process the data sent by the client.
+                            int wordCount = tcpReceived.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
+                            AddStatus($"[TCP] Counting words...: {wordCount}");
+                            byte[] tcpResponse = Encoding.ASCII.GetBytes(wordCount.ToString());
+
+                            // Send back a response.
+                            stream.Write(tcpResponse, 0, tcpResponse.Length);
+                            AddStatus($"[TCP] Packet data sent to {client.Client.RemoteEndPoint.ToString()} : {Encoding.ASCII.GetString(tcpResponse, 0, tcpResponse.Length)}");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        AddStatus($"[TCP] Connection error!: {e.ToString()}\r\n---");
                     }
 
                     // Shutdown and end connection
